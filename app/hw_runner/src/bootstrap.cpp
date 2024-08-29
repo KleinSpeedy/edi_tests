@@ -93,7 +93,7 @@ static void clock_setup(void) {
     // HSE = 8 MHz (typical for Nucleo-144 boards)
     // Target System Clock = 120 MHz
     // PLLM = 8, PLLN = 240, PLLP = 2, PLLQ = 5
-    rcc_set_main_pll_hse(8, 240, 2, 5);
+    rcc_set_main_pll_hse(8, 240, 2, 5, 0);
 
     // Enable the PLL
     rcc_osc_on(RCC_PLL);

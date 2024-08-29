@@ -16,7 +16,7 @@ set(LD_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/ld CACHE INTERNAL "")
 
 file(MAKE_DIRECTORY ${LD_SCRIPTS})
 
-set(DEVICE stm32f207zet)
+set(DEVICE stm32f429zit)
 
 set(GENLINK ${OPENCM3_ROOT}/scripts/genlink.py)
 set(LD_SRC ${OPENCM3_ROOT}/ld/linker.ld.S)
@@ -36,28 +36,28 @@ execute_process(
 
 add_library(cm3 STATIC
         ${OPENCM3_ROOT}/lib/cm3/vector.c
-        ${OPENCM3_ROOT}/include/libopencm3/stm32f2/nvic.h
-        #${OPENCM3_ROOT}/include/libopencm3/stm32f4/nvic.h
+        #${OPENCM3_ROOT}/include/libopencm3/stm32f2/nvic.h
+        ${OPENCM3_ROOT}/include/libopencm3/stm32f4/nvic.h
 
         ${OPENCM3_ROOT}/lib/cm3/nvic.c
         ${OPENCM3_ROOT}/lib/cm3/dwt.c
 
         ${OPENCM3_ROOT}/lib/stm32/common/rcc_common_all.c
-        ${OPENCM3_ROOT}/lib/stm32/f2/rcc.c
-        #${OPENCM3_ROOT}/lib/stm32/f4/rcc.c
+        #${OPENCM3_ROOT}/lib/stm32/f2/rcc.c
+        ${OPENCM3_ROOT}/lib/stm32/f4/rcc.c
 
         ${OPENCM3_ROOT}/include/libopencm3/stm32/gpio.h
         ${OPENCM3_ROOT}/lib/stm32/common/gpio_common_f0234.c
         ${OPENCM3_ROOT}/lib/stm32/common/gpio_common_all.c
-        ${OPENCM3_ROOT}/lib/stm32/f2/gpio.c
-        #${OPENCM3_ROOT}/lib/stm32/f4/gpio.c
+        #${OPENCM3_ROOT}/lib/stm32/f2/gpio.c
+        ${OPENCM3_ROOT}/lib/stm32/f4/gpio.c
 
         ${OPENCM3_ROOT}/lib/stm32/common/exti_common_all.c
 
         ${OPENCM3_ROOT}/lib/stm32/common/flash_common_all.c
         ${OPENCM3_ROOT}/lib/stm32/common/flash_common_f24.c
-        ${OPENCM3_ROOT}/lib/stm32/f2/flash.c
-        #${OPENCM3_ROOT}/lib/stm32/f4/flash.c
+        #${OPENCM3_ROOT}/lib/stm32/f2/flash.c
+        ${OPENCM3_ROOT}/lib/stm32/f4/flash.c
 
         ${OPENCM3_ROOT}/lib/stm32/common/usart_common_all.c
         ${OPENCM3_ROOT}/lib/stm32/common/usart_common_f124.c
@@ -73,13 +73,13 @@ target_include_directories(cm3
         )
 
 target_compile_definitions(cm3 PUBLIC
-        STM32F2
-        STM32F207ZET
+        STM32F4
+        STM32F429ZIT
         )
 
-set(IRQ_IN_FILE include/libopencm3/stm32/f2/irq.json)
+set(IRQ_IN_FILE include/libopencm3/stm32/f4/irq.json)
 add_custom_command(
-        OUTPUT ${OPENCM3_ROOT}/include/libopencm3/stm32f2/nvic.h
+        OUTPUT ${OPENCM3_ROOT}/include/libopencm3/stm32f4/nvic.h
         COMMAND ${Python3_EXECUTABLE} ${OPENCM3_ROOT}/scripts/irq2nvic_h ./${IRQ_IN_FILE}
         WORKING_DIRECTORY ${OPENCM3_ROOT}
 )
